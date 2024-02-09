@@ -1,6 +1,18 @@
 # CPA
-TD CPA
+
 Voici une explication détaillée de ce que fait le code :
+
+## Sommaire
+
+## Obtenir le Code
+
+Pour obtenir le code source de ce projet, suivez les étapes ci-dessous :
+
+Si vous avez Git installé, vous pouvez cloner le référentiel en utilisant la commande suivante dans votre terminal :
+
+```bash
+git clone https://github.com/votre-utilisateur/nom-du-projet.git
+```
 
 ## Chargement des données :
 
