@@ -10,9 +10,9 @@ Le code charge trois ensembles de données :
 - Des traces de consommation de puissance `traces1000x512.mat`, qui sont des mesures de la consommation de puissance pendant le chiffrement.
 
 Code :
-```mat
-inputs = load('inputs.mat').Inputs1; % Replace 'inputs.mat' with your actual input file name
-subBytes = load('subBytes.mat').SubBytes; % Replace 'subBytes.mat' with your actual SubBytes file name
+```m
+inputs = load('inputs.mat').Inputs1;
+subBytes = load('subBytes.mat').SubBytes;
 traces = load('traces1000x512.mat').traces;
 ```
 
