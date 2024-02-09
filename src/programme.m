@@ -2,13 +2,13 @@ inputs = load('inputs.mat').Inputs1;
 subBytes = load('subBytes.mat').SubBytes;
 traces = load('traces1000x512.mat').traces;
 
-num_traces = size(traces, 1);
-num_time_samples = size(traces, 2);
-num_keys = 256;
-P = zeros(num_traces, num_keys);
+traces_size = size(traces, 1);
+time_samples_size = size(traces, 2);
+keys_size = 256;
+P = zeros(traces_size, keys_size);
 
-for k = 0:num_keys-1
-    for i = 1:num_traces
+for k = 0:keys_size-1
+    for i = 1:traces_size
         input_byte = uint8(inputs(i)); 
         roundKeyOutput = bitxor(input_byte, uint8(k));
         subByteOutput = subBytes(roundKeyOutput+1); 
@@ -16,25 +16,25 @@ for k = 0:num_keys-1
     end
 end
 
-correlation_matrix = zeros(num_keys, num_time_samples);
-for k = 1:num_keys
-    for t = 1:num_time_samples
+corr_matrix = zeros(keys_size, time_samples_size);
+for k = 1:keys_size
+    for t = 1:time_samples_size
         R = corrcoef(P(:, k), traces(:, t));
-        correlation_matrix(k, t) = R(1, 2);  
+        corr_matrix(k, t) = R(1, 2);  
     end
 end
 
-[~, max_key_index] = max(max(correlation_matrix, [], 2));
+[~, key_index_max] = max(max(corr_matrix, [], 2));
 
-plot(correlation_matrix(max_key_index, :));
+plot(corr_matrix(key_index_max, :));
 title('2D Correlation Plot');
 xlabel('Time Sample');
 ylabel('Correlation');
 
-surf(correlation_matrix);
+surf(corr_matrix);
 title('3D Correlation Surface');
 xlabel('Time Sample');
 ylabel('Key');
 zlabel('Correlation');
 
-likely_key_byte = max_key_index - 1;
+key_byte = key_index_max - 1;
