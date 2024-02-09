@@ -109,7 +109,7 @@ zlabel('Correlation');
 
 ### Graph :
 
-![Capture d’écran 2024-02-09 à 11.16.42.png](Capture d’écran 2024-02-09 à 11.16.42.png)
+![./snip.png](./snip.png)
 
 ## Clé probable :
 
