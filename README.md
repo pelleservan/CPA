@@ -9,6 +9,13 @@ Le code charge trois ensembles de données :
 - Une table de substitution `subBytes.mat`, qui est utilisée dans l'opération de substitution.
 - Des traces de consommation de puissance `traces1000x512.mat`, qui sont des mesures de la consommation de puissance pendant le chiffrement.
 
+Code :
+```mat
+inputs = load('inputs.mat').Inputs1; % Replace 'inputs.mat' with your actual input file name
+subBytes = load('subBytes.mat').SubBytes; % Replace 'subBytes.mat' with your actual SubBytes file name
+traces = load('traces1000x512.mat').traces;
+```
+
 ## Initialisation des variables :
 
 `num_traces` représente le nombre de traces de consommation de puissance.
