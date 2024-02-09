@@ -134,6 +134,7 @@ zlabel('Correlation');
 ### Graph :
 
 ![./snip/snip.png](./snip/snip.png)
+![./src/graph3d.fig](./src/graph3d.fig]
 
 ## 8# - Clé probable :
 
