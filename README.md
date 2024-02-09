@@ -4,7 +4,17 @@ Voici une explication détaillée de ce que fait le code :
 
 ## Sommaire
 
-## Obtenir le Code
+1. [Obtenir le Code](#1---obtenir-le-code)
+2. [Changement des données](#2---chargement-des-données)
+3. [Initialisation des variable](#3---initialisation-des-variables)
+4. [Boucle principale](#4---boucle-principale)
+5. [Calcule de la corrélation](#5---calcul-de-la-corrélation)
+6. [Identification de la clé probale](#6---identification-de-la-clé-probable)
+7. [Tracé des graphiques](#7---tracé-des-graphiques)
+8. [Clé probable](#8---clé-probable)
+9. [Conclusion](#9---conclusion)
+
+## 1# - Obtenir le Code
 
 Pour obtenir le code source de ce projet, suivez les étapes ci-dessous :
 
@@ -14,7 +24,7 @@ Si vous avez Git installé, vous pouvez cloner le référentiel en utilisant la 
 git clone https://github.com/votre-utilisateur/nom-du-projet.git
 ```
 
-## Chargement des données :
+## 2# - Chargement des données :
 
 Le code charge trois ensembles de données :
 - Les entrées `inputs.mat`, qui sont les données brutes à chiffrer.
@@ -29,7 +39,7 @@ subBytes = load('subBytes.mat').SubBytes;
 traces = load('traces1000x512.mat').traces;
 ```
 
-## Initialisation des variables :
+## 3# - Initialisation des variables :
 
 `num_traces` représente le nombre de traces de consommation de puissance.
 `num_time_samples` représente le nombre d'échantillons de temps dans chaque trace.
@@ -45,7 +55,7 @@ num_keys = 256;
 P = zeros(num_traces, num_keys);
 ```
 
-## Boucle principale :
+## 4# - Boucle principale :
 
 Une __boucle itère__ sur toutes les clés possibles (de 0 à 255).
 Pour chaque clé, la boucle parcourt toutes les traces et fait ce qui suit :
@@ -74,7 +84,7 @@ for k = 0:num_keys-1
 end
 ```
 
-## Calcul de la corrélation :
+## 5# - Calcul de la corrélation :
 
 Une fois que les poids de Hamming ont été estimés pour toutes les clés et toutes les traces, le code calcule la corrélation entre les poids de Hamming et les traces de consommation de puissance.
 Il génère une matrice de corrélation où chaque élément représente la corrélation entre le poids de Hamming pour une clé donnée et chaque échantillon de temps dans les traces de consommation de puissance.
@@ -91,11 +101,11 @@ for k = 1:num_keys
 end
 ```
 
-## Identification de la clé probable :
+## 6# - Identification de la clé probable :
 
 Le code identifie la clé probable en trouvant la clé qui a la plus grande corrélation avec les traces de consommation de puissance.
 
-## Tracé des graphiques :
+## 7# - Tracé des graphiques :
 
 Le code trace deux graphiques :
 
@@ -123,7 +133,7 @@ zlabel('Correlation');
 
 ![./snip/snip.png](./snip/snip.png)
 
-## Clé probable :
+## 8# - Clé probable :
 
 Le code identifie la clé probable en choisissant la clé avec la plus grande corrélation.
 
@@ -133,6 +143,6 @@ Le code identifie la clé probable en choisissant la clé avec la plus grande co
 [~, max_key_index] = max(max(correlation_matrix, [], 2));
 ```
 
-## Conclusion :
+## 9# - Conclusion :
 
 Le code implémente une attaque de type DPA ou SPA pour retrouver la clé secrète utilisée dans le chiffrement à partir des traces de consommation de puissance et des données d'entrée chiffrées.
