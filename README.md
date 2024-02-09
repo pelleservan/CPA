@@ -4,6 +4,7 @@ Voici une explication détaillée de ce que fait le code :
 
 ## Sommaire
 
+0. [Sujet](#0---sujet)
 1. [Obtenir le Code](#1---obtenir-le-code)
 2. [Changement des données](#2---chargement-des-données)
 3. [Initialisation des variable](#3---initialisation-des-variables)
@@ -13,6 +14,14 @@ Voici une explication détaillée de ce que fait le code :
 7. [Tracé des graphiques](#7---tracé-des-graphiques)
 8. [Clé probable](#8---clé-probable)
 9. [Conclusion](#9---conclusion)
+
+## 0# - Sujet
+
+L’objectif de ce TP est de réaliser l’attaque __CPA__ d’un chiffrement __AES__ implanté dans un __FPGA__ à partir de traces fournies. L’attaque ne cible que le premier octet de la clé secrète. Le code de l’attaque sera développé avec __MATLAB__. 
+
+Vous devez donc modéliser en langage Matlab les deux premières étapes de l’algorithme __AES__ (__AddRoundKey__ et __SubBytes__), puis vous devez modéliser le calcul de la matrice __P__ d’estimation du poids de __Hamming__ de la sortie de l’opération __SubBytes__ pour toutes les sous-clés possibles.
+
+Enfin un calcul de corrélation doit vous permettre d’extraire la valeur de la clé secrète, comme celle qui donne le maximum de corrélation. Vous devrez présenter dans un compte rendu une visualisation graphique en 2D et 3D de la corrélation afin de mettre en évidence les points d’intérêts (fuites d’information) lors du chiffrement. 
 
 ## 1# - Obtenir le Code
 
@@ -133,8 +142,13 @@ zlabel('Correlation');
 
 ### Graph :
 
-![./snip/snip.png](./snip/snip.png)
-![./src/graph3d.fig](./src/graph3d.fig]
+#### 2D :
+
+![./snip/graph2d.png](./snip/garph2d.jpg)
+
+#### 3D :
+
+![./snip/graph3d.png](./snip/graph3d.png)
 
 ## 8# - Clé probable :
 
