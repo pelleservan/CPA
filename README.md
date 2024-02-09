@@ -109,7 +109,7 @@ zlabel('Correlation');
 
 ### Graph :
 
-![./snip.png](./snip.png)
+![./snip/snip.png](./snip/snip.png)
 
 ## Clé probable :
 
