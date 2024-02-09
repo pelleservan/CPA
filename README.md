@@ -107,6 +107,10 @@ ylabel('Key');
 zlabel('Correlation');
 ```
 
+### Graph :
+
+![Uploading image.png…]()
+
 ## Clé probable :
 
 Le code identifie la clé probable en choisissant la clé avec la plus grande corrélation.
