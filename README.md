@@ -114,13 +114,15 @@ Le code trace deux graphiques :
 
 ### Code :
 
+#### 2D :
 ```mat
-% Plotting 2D correlation
 plot(correlation_matrix(max_key_index, :));
 title('2D Correlation Plot');
 xlabel('Time Sample');
 ylabel('Correlation');
-
+```
+### 3D :
+```mat
 % Plotting 3D correlation
 surf(correlation_matrix);
 title('3D Correlation Surface');
