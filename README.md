@@ -42,7 +42,7 @@ Le code charge trois ensembles de données :
 
 ### Code :
 
-```mat
+```matlab
 inputs = load('inputs.mat').Inputs1;
 subBytes = load('subBytes.mat').SubBytes;
 traces = load('traces1000x512.mat').traces;
@@ -57,11 +57,11 @@ Une matrice __P__ est initialisée pour stocker les estimations de poids de Hamm
 
 ### Code :
 
-```mat
-num_traces = size(traces, 1);
-num_time_samples = size(traces, 2);
-num_keys = 256;
-P = zeros(num_traces, num_keys);
+```matlab
+traces_size = size(traces, 1);
+time_samples_size = size(traces, 2);
+keys_size = 256;
+P = zeros(traces_size, keys_size);
 ```
 
 ## 4# - Boucle principale :
@@ -75,20 +75,13 @@ Pour chaque clé, la boucle parcourt toutes les traces et fait ce qui suit :
 
 ### Code :
 
-```mat
-for k = 0:num_keys-1
-    for i = 1:num_traces
-        % Ensure the input is an integer before the XOR operation
-        input_byte = uint8(inputs(i));  % Convert to unsigned 8-bit integer
-        
-        % Perform AddRoundKey (XOR with the key)
+```matlab
+for k = 0:keys_size-1
+    for i = 1:traces_size
+        input_byte = uint8(inputs(i)); 
         roundKeyOutput = bitxor(input_byte, uint8(k));
-        
-        % Perform SubBytes operation
-        subByteOutput = subBytes(roundKeyOutput+1); % MATLAB uses 1-indexing
-        
-        % Estimate the Hamming weight of the SubBytes output
-        P(i, k+1) = sum(dec2bin(subByteOutput, 8) == '1');  % Ensure 8-bit representation
+        subByteOutput = subBytes(roundKeyOutput+1); 
+        P(i, k+1) = sum(dec2bin(subByteOutput, 8) == '1'); 
     end
 end
 ```
@@ -98,14 +91,14 @@ end
 Une fois que les poids de Hamming ont été estimés pour toutes les clés et toutes les traces, le code calcule la corrélation entre les poids de Hamming et les traces de consommation de puissance.
 Il génère une matrice de corrélation où chaque élément représente la corrélation entre le poids de Hamming pour une clé donnée et chaque échantillon de temps dans les traces de consommation de puissance.
 
-### Code
+### Code :
 
-```mat
-correlation_matrix = zeros(num_keys, num_time_samples);
-for k = 1:num_keys
-    for t = 1:num_time_samples
+```matlab
+corr_matrix = zeros(keys_size, time_samples_size);
+for k = 1:keys_size
+    for t = 1:time_samples_size
         R = corrcoef(P(:, k), traces(:, t));
-        correlation_matrix(k, t) = R(1, 2);  % Use the off-diagonal element
+        corr_matrix(k, t) = R(1, 2);  
     end
 end
 ```
@@ -113,6 +106,11 @@ end
 ## 6# - Identification de la clé probable :
 
 Le code identifie la clé probable en trouvant la clé qui a la plus grande corrélation avec les traces de consommation de puissance.
+
+### Code :
+```matlab
+[~, key_index_max] = max(max(corr_matrix, [], 2));
+```
 
 ## 7# - Tracé des graphiques :
 
@@ -124,20 +122,20 @@ Le code trace deux graphiques :
 ### Code :
 
 #### 2D :
-```mat
-plot(correlation_matrix(max_key_index, :));
+```matlab
+plot(corr_matrix(key_index_max, :));
 title('2D Correlation Plot');
 xlabel('Time Sample');
 ylabel('Correlation');
 ```
+
 ### 3D :
-```mat
-% Plotting 3D correlation
-surf(correlation_matrix);
+```matlab
+surf(corr_matrix);
 title('3D Correlation Surface');
 xlabel('Time Sample');
 ylabel('Key');
-zlabel('Correlation');
+zlabel('Correlation');;
 ```
 
 ### Graph :
@@ -156,9 +154,13 @@ Le code identifie la clé probable en choisissant la clé avec la plus grande co
 
 ### Code :
 
-```mat
-[~, max_key_index] = max(max(correlation_matrix, [], 2));
+```matlab
+key_byte = key_index_max - 1;
 ```
+
+### Résultat :
+
+On obtient alors une `key_byte = 43`.
 
 ## 9# - Conclusion :
 
